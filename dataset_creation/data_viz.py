@@ -1,4 +1,4 @@
-from AudioUtil import *
+from dataset_creation.AudioUtil import *
 import torch
 
 (sigP, srP) = AudioUtil.open("data/wav/piano/piano_1003.wav")

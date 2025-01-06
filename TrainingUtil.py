@@ -3,7 +3,7 @@ from torch import nn
 
 class Training:
     
-    def training(model, train_dl, num_epochs):
+    def training_loop(model, train_dl, num_epochs):
         # Loss Function, Optimizer and Scheduler
         criterion = nn.CrossEntropyLoss()
         optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
@@ -20,8 +20,8 @@ class Training:
 
             # Repeat for each batch in the training set
             for i, data in enumerate(train_dl):
-                # Get the input features and target labels, and put them on the GPU
-                inputs, labels = data[0].to(device), data[1].to(device)
+                
+                inputs, labels = data[0], data[1]
 
                 # Normalize the inputs
                 inputs_m, inputs_s = inputs.mean(), inputs.std()
@@ -46,8 +46,8 @@ class Training:
                 correct_prediction += (prediction == labels).sum().item()
                 total_prediction += prediction.shape[0]
 
-                #if i % 10 == 0:    # print every 10 mini-batches
-                #    print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 10))
+                if i % 10 == 0:    # print every 10 mini-batches
+                    print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 10))
             
             # Print stats at the end of the epoch
             num_batches = len(train_dl)

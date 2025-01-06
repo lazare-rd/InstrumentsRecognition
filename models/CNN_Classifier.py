@@ -62,7 +62,7 @@ class CNN_Classifier(nn.Module):
 
         # Adaptive pool and flatten for input to linear layer
         x = self.ap(x)
-        x = torch.flatten(x)
+        x = x.view(x.shape[0], -1)
 
         # Linear layer
         x = self.lin(x)
