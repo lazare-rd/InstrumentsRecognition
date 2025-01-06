@@ -3,18 +3,13 @@ from torch import nn
 from torch.nn import init
 import torch
 
-# ----------------------------
-# Audio Classification Model
-# ----------------------------
 class CNN_Classifier(nn.Module):
-    # ----------------------------
-    # Build the model architecture
-    # ----------------------------
+    
     def __init__(self):
         super().__init__()
         conv_layers = []
 
-        # First Convolution Block with Relu and Batch Norm. Use Kaiming Initialization
+        # First Convolution Block
         self.conv1 = nn.Conv2d(2, 8, kernel_size=(5, 5), stride=(2, 2), padding=(2, 2))
         self.relu1 = nn.ReLU()
         self.bn1 = nn.BatchNorm2d(8)
@@ -50,22 +45,16 @@ class CNN_Classifier(nn.Module):
         self.ap = nn.AdaptiveAvgPool2d(output_size=1)
         self.lin = nn.Linear(in_features=64, out_features=4)
 
-        # Wrap the Convolutional Blocks
         self.conv = nn.Sequential(*conv_layers)
  
-    # ----------------------------
-    # Forward pass computations
-    # ----------------------------
+   
     def forward(self, x):
-        # Run the convolutional blocks
+
         x = self.conv(x)
 
-        # Adaptive pool and flatten for input to linear layer
         x = self.ap(x)
         x = x.view(x.shape[0], -1)
 
-        # Linear layer
         x = self.lin(x)
 
-        # Final output
         return x
