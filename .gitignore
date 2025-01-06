@@ -1,2 +1,5 @@
 .env
 data/
+.gitignore
+.hypothesis/
+__pycache__/
