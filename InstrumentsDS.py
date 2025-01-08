@@ -26,14 +26,22 @@ class InstrumentsDS(Dataset):
         return self.mapping.shape[0]
         
     def __getitem__(self, idx):
-       
-        audio_file = f"{self.data_dir}/{self.mapping.at[idx, 'file_name']}"
-        class_id = self.mapping.at[idx, 'classID']
-        class_id = int(class_id)
+        if self.data_dir == "data/spec":
+            tensor_file = f"{self.data_dir}/{self.mapping.iloc[idx, 0][:-4]}.pt"
+            class_id = self.mapping.iloc[idx, 1]
+            class_id = int(class_id)
 
-        aud = AudioUtil.open(audio_file)
+            tensor = torch.load(tensor_file)
 
-        sgram = AudioUtil.spectro_gram(aud, n_mels=64, n_fft=1024, hop_len=None)
-        aug_sgram = AudioUtil.spectro_augment(sgram, max_mask_pct=0.1, n_freq_masks=2, n_time_masks=2)
+            return tensor, class_id
+        
+        else:
+            audio_file = f"{self.data_dir}/{self.mapping.iloc[idx, 0]}"
+            class_id = self.mapping.iloc[idx, 1]
+            class_id = int(class_id)
+            aud = AudioUtil.open(audio_file)
 
-        return aug_sgram, class_id
+            sgram = AudioUtil.spectro_gram(aud, n_mels=64, n_fft=1024, hop_len=None)
+            aug_sgram = AudioUtil.spectro_augment(sgram, max_mask_pct=0.1, n_freq_masks=2, n_time_masks=2)
+
+            return aug_sgram, class_id
