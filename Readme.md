@@ -133,7 +133,7 @@ LSTM_Classifier(
 
 Comme le CNN, et nous pensons pour les mêmes raisons, le LSTM atteint une accuracy correcte dès la première epoch. Son evaluation accuracy est même plus élevée à la première epoch avant de se remettre au niveau de la training accuracy plus loin dans l'entrainement. Ce cas de figure ne se présente pas avec le CNN.
 
-Nous pensons que cela est du à la technique de data-augmentation utilisée à la création du dataset qui implique que des séquences sonore se répètent en partie d'un échantillon à un autre. Le LSTM étant plus optimisé pour analyser les séquances de données, il est peut être capable de généraliser plus rapidement sur ce jeu de données.
+Nous pensons que cela est du à la technique de data-augmentation utilisée à la création du dataset qui implique que des séquences sonore se répètent en partie d'un échantillon à un autre. Le LSTM étant plus optimisé pour analyser les séquences de données, il est peut être capable de généraliser plus rapidement sur ce jeu de données.
 
 Les données de loss vont dans le même sens que celles de l'accuracy car même si toutes les classes ne sont pas de même taille, des facteurs multiplicateurs correspondants ont été appliqués dans la fonction de loss.
 
