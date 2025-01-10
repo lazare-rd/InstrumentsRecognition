@@ -1,5 +1,7 @@
 from dataset_creation.AudioUtil import *
 import torch
+import json
+import matplotlib.pyplot as plt
 
 (sigP, srP) = AudioUtil.open("data/wav/piano/piano_1003.wav")
 (sigG, srG) = AudioUtil.open("data/wav/guitar/guitar_1009.wav")
@@ -12,6 +14,4 @@ print(f"violin shape : {sigV.shape}\nsampling rate : {srV}\n")
 print(f"cello shape : {sigC.shape}\nsampling rate : {srC}\n")
 
 specP = AudioUtil.spectro_gram((sigP, srP))
-print(specP.shape)
 
-AudioUtil.plot_spec(specP)
